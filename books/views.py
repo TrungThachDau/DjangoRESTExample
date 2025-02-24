@@ -29,10 +29,6 @@ class BookViewSet(viewsets.ModelViewSet):
 
 
 class TypeBookList(APIView):
-    """
-    List all snippets, or create a new snippet.
-    """
-
     def get(self, request, format=None):
         try:
             typebook = TypeBook.objects.all()
@@ -46,12 +42,13 @@ class BookUpdateView(APIView):
     def UpdateBook(self, request, id):
         try:
             your_model = Book.objects.get(id=id)
+            serializer = BookSerializer(your_model, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
         except Book.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = BookSerializer(your_model, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
