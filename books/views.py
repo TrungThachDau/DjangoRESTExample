@@ -1,3 +1,4 @@
+
 from django.core.serializers import serialize
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -44,10 +45,11 @@ class BookUpdateView(APIView):
             your_model = Book.objects.get(id=id)
             serializer = BookSerializer(your_model, data=request.data)
             if serializer.is_valid():
-                serializer.save()
+                await serializer.save()
                 return Response(serializer.data)
         except Book.DoesNotExist:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 
 

@@ -1,10 +1,12 @@
 
 from django.urls import path,include
+from django.views.decorators.csrf import csrf_exempt
+from graphene_django.views import GraphQLView
+
 from . import views
 from rest_framework import routers
 
 from .views import BookUpdateView, GetAllTypeBook
-
 router = routers.DefaultRouter()
 router.register(r'books', views.BookViewSet)
 urlpatterns = [
@@ -15,5 +17,6 @@ urlpatterns = [
     path('books/<int:id>/', BookUpdateView.as_view(), name='book-update'),
 
     path('type_book/', views.TypeBookList.as_view()),
-    path('typebooks/', GetAllTypeBook, name='typebooks-list'),
+    path('typebooks/', GetAllTypeBook, name='type-books'),
+
 ]

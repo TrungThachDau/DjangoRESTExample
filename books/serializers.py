@@ -5,7 +5,7 @@ from .models import TypeBook
 class BookSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Book
-        fields = ['id', 'title', 'author', 'price', 'isbn', 'pub_date','type_id']
+        fields = ['id', 'title', 'author', 'price', 'pub_date','type_id']
 
 class TypeBookSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
